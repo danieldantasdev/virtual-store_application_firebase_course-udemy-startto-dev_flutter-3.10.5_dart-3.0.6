@@ -23,6 +23,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
         primaryColor: const Color.fromARGB(255, 4, 125, 141),
+        actionIconTheme: ActionIconThemeData(
+          drawerButtonIconBuilder: (context) => const Icon(
+            Icons.menu,
+            size: 30,
+            color: Colors.white,
+          ),
+        ),
       ),
       home: HomeScreen(),
     );
