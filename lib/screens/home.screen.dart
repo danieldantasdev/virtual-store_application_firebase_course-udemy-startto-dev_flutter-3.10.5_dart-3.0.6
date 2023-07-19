@@ -15,7 +15,19 @@ class HomeScreen extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       children: <Widget>[
         Scaffold(
-          body: HomeTab(),
+          body: const HomeTab(),
+          drawer: CustomDrawerWidget(pageController: _pageController),
+        ),
+        Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              "Categorias",
+              style: TextStyle(color: Colors.white),
+            ),
+            centerTitle: true,
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          body: const CategoryTab(),
           drawer: CustomDrawerWidget(pageController: _pageController),
         ),
       ],
