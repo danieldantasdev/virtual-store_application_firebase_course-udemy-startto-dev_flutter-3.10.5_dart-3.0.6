@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import './screens/screens.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -17,9 +20,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        // useMaterial3: true,
+        useMaterial3: true,
         primarySwatch: Colors.blue,
-        primaryColor: Colors.blue,
+        primaryColor: const Color.fromARGB(255, 4, 125, 141),
       ),
       home: HomeScreen(),
     );
