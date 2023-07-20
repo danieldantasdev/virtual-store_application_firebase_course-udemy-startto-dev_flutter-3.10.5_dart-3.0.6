@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../screens/screens.dart';
 import '../widgets.dart';
 
 class CustomDrawerWidget extends StatelessWidget {
@@ -68,7 +69,11 @@ class CustomDrawerWidget extends StatelessWidget {
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => SignInScreen(),
+                              ));
+                            },
                           )
                         ],
                       ),
