@@ -1,2 +1,2 @@
-export 'category.tab.dart';
-export 'home.tab.dart';
+export 'home/home.tab.dart';
+export 'products/category.tab.dart';

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:virtual_store/widgets/categories/category_tile.widget.dart';
+
+import '../../widgets/widgets.dart';
 
 class CategoryTab extends StatelessWidget {
   const CategoryTab({super.key});

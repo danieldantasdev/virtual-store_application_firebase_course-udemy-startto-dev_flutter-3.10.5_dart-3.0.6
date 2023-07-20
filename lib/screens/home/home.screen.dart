@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../tabs/tabs.dart';
-import '../widgets/widgets.dart';
+import '../../tabs/tabs.dart';
+import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});

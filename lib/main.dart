@@ -29,6 +29,15 @@ class MyApp extends StatelessWidget {
             size: 30,
             color: Colors.white,
           ),
+          backButtonIconBuilder: (context) => const Icon(
+            Icons.arrow_back,
+            size: 30,
+            color: Colors.white,
+          ),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 4, 125, 141),
+          foregroundColor: Color.fromARGB(255, 255, 255, 255),
         ),
       ),
       home: HomeScreen(),
