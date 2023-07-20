@@ -38,7 +38,7 @@ class SignInScreen extends StatelessWidget {
           )
         ],
       ),
-      body: ScopedModelDescendant<User>(
+      body: ScopedModelDescendant<UserModel>(
         builder: (context, child, model) {
           if (model.isLoading) {
             return const Center(

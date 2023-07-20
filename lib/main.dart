@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<User>(
-      model: User(),
+    return ScopedModel<UserModel>(
+      model: UserModel(),
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
