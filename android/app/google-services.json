@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "617770454337",
+    "project_id": "virtual-store-98339",
+    "storage_bucket": "virtual-store-98339.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617770454337:android:c3bd26b70795883ed525c0",
+        "android_client_info": {
+          "package_name": "br.com.danieldantasdev.virtualstore.virtual_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617770454337-em56sk8qnthjpthe9dpt4c1novpar2v8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrSoOFZrqR4KlAFmytUl6o92-wBw8TpjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617770454337-em56sk8qnthjpthe9dpt4c1novpar2v8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
