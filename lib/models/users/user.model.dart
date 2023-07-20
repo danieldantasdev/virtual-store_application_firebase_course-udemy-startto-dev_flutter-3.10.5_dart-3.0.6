@@ -11,7 +11,7 @@ class UserModel extends Model {
 
   bool isLoading = false;
   User? _firebaseUser;
-  Map<String, dynamic> _userData = {};
+  Map<String, dynamic> userData = {};
 
   void signIn() async {
     isLoading = true;
@@ -47,13 +47,22 @@ class UserModel extends Model {
     });
   }
 
+  void signOut() async {
+    await _firebaseAuth.signOut();
+
+    userData = {};
+    _firebaseUser = null;
+    notifyListeners();
+  }
+
   void recoverPass() {}
+
   bool isLoggedIn() {
-    return false;
+    return _firebaseUser != null;
   }
 
   Future<Null> _saveUserData(Map<String, dynamic> userData) async {
-    _userData = userData;
+    this.userData = userData;
     await _usersCollection.doc(_firebaseUser?.uid).set(userData);
   }
 }

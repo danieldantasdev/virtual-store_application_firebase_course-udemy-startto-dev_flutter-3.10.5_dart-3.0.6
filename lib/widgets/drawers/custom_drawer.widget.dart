@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
+import '../../models/models.dart';
 import '../../screens/screens.dart';
 import '../widgets.dart';
 
@@ -48,39 +50,49 @@ class CustomDrawerWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Positioned(
-                        left: 0.0,
-                        bottom: 0.0,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Olá,",
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                            GestureDetector(
-                              child: Text(
-                                "Entre ou Cadastre-se >",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => SignInScreen(),
+                      ScopedModelDescendant<UserModel>(
+                        builder: (context, child, model) {
+                          return Positioned(
+                            left: 0.0,
+                            bottom: 0.0,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Olá, ${!model.isLoggedIn() ? "" : model.userData["name"]}",
+                                  style: const TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w900,
                                   ),
-                                );
-                              },
-                            )
-                          ],
-                        ),
+                                ),
+                                GestureDetector(
+                                  child: Text(
+                                    !model.isLoggedIn()
+                                        ? "Entre ou Cadastre-se >"
+                                        : "Sair",
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    if (!model.isLoggedIn()) {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => SignInScreen(),
+                                        ),
+                                      );
+                                    } else {
+                                      model.signOut();
+                                    }
+                                  },
+                                )
+                              ],
+                            ),
+                          );
+                        },
                       )
                     ],
                   ),
@@ -113,24 +125,24 @@ class CustomDrawerWidget extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 32.0, top: 700.0),
-            child: TextButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => SignInScreen(),
-                  ),
-                );
-              },
-              child: const Row(
-                children: [
-                  Text("Sair"),
-                  Icon(Icons.logout),
-                ],
-              ),
-            ),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 32.0, top: 700.0),
+          //   child: TextButton(
+          //     onPressed: () {
+          //       Navigator.of(context).pushReplacement(
+          //         MaterialPageRoute(
+          //           builder: (context) => SignInScreen(),
+          //         ),
+          //       );
+          //     },
+          //     child: const Row(
+          //       children: [
+          //         Text("Sair"),
+          //         Icon(Icons.logout),
+          //       ],
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

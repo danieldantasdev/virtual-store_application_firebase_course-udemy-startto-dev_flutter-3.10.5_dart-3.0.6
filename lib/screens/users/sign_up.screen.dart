@@ -21,9 +21,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final TextEditingController _addressController = TextEditingController();
 
-  void _onSuccess() {}
+  void _onSuccess(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text(
+          "Usuário criado com sucesso!",
+        ),
+        duration: const Duration(seconds: 2),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
+    );
+    Future.delayed(const Duration(seconds: 2)).then((_) {
+      Navigator.of(context).pop();
+    });
+  }
 
-  void _onFailed() {}
+  void _onFailed(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Falha ao criar usuário"),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.redAccent,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,8 +141,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         model.signUp(
                           userData: userData,
                           pass: _passwordController.text,
-                          onSuccess: _onSuccess,
-                          onFailed: _onFailed,
+                          onSuccess: () => _onSuccess(context),
+                          onFailed: () => _onFailed(context),
                         );
                       }
                     },
