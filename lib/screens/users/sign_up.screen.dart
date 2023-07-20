@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import '../../models/models.dart';
+import '../../utils/utils.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -14,37 +15,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
-
   final TextEditingController _emailController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
-
   final TextEditingController _addressController = TextEditingController();
 
-  void _onSuccess(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text(
-          "Usuário criado com sucesso!",
-        ),
-        duration: const Duration(seconds: 2),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-    );
-    Future.delayed(const Duration(seconds: 2)).then((_) {
-      Navigator.of(context).pop();
-    });
-  }
-
-  void _onFailed(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Falha ao criar usuário"),
-        duration: Duration(seconds: 2),
-        backgroundColor: Colors.redAccent,
-      ),
-    );
-  }
+  final SnackBarUtil _snackBarUtil = SnackBarUtil();
 
   @override
   Widget build(BuildContext context) {
@@ -141,8 +116,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         model.signUp(
                           userData: userData,
                           pass: _passwordController.text,
-                          onSuccess: () => _onSuccess(context),
-                          onFailed: () => _onFailed(context),
+                          onSuccess: () => _snackBarUtil.onSuccess(
+                              context, "Usuário criado com sucesso!"),
+                          onFailed: () => _snackBarUtil.onFailed(
+                              context, "Falha ao criar usuário"),
                         );
                       }
                     },
