@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
+import '../../models/models.dart';
+import '../../utils/utils.dart';
 
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+
+  final SnackBarUtil _snackBarUtil = SnackBarUtil();
 
   @override
   Widget build(BuildContext context) {
@@ -12,83 +28,111 @@ class SignUpScreen extends StatelessWidget {
         title: const Text("Criar conta"),
         centerTitle: true,
       ),
-      body: Form(
-        key: _globalKey,
-        child: ListView(
-          padding: const EdgeInsets.all(10.0),
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: "Nome completo",
-                border: OutlineInputBorder(),
-              ),
-              validator: (text) {
-                if (text!.isEmpty) {
-                  return "Nome inválido!";
-                }
-              },
+      body: ScopedModelDescendant<UserModel>(
+        builder: (context, child, model) {
+          if (model.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Form(
+            key: _globalKey,
+            child: ListView(
+              padding: const EdgeInsets.all(10.0),
+              children: [
+                TextFormField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    hintText: "Nome completo",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (text) {
+                    if (text!.isEmpty) {
+                      return "Nome inválido!";
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    hintText: "E-mail",
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (text) {
+                    if (text!.isEmpty || !text!.contains("@")) {
+                      return "E-mail inválido!";
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: const InputDecoration(
+                    hintText: "Senha",
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
+                  validator: (text) {
+                    if (text!.isEmpty || text.length < 6) {
+                      return "Senha inválida!";
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: _addressController,
+                  decoration: const InputDecoration(
+                    hintText: "Endereço",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (text) {
+                    if (text!.isEmpty || text.length < 6) {
+                      return "Endereço inválido!";
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 45,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_globalKey.currentState!.validate()) {
+                        Map<String, dynamic> userData = {
+                          "name": _nameController.text,
+                          "email": _emailController.text,
+                          "address": _addressController.text,
+                        };
+
+                        model.signUp(
+                          userData: userData,
+                          pass: _passwordController.text,
+                          onSuccess: () => _snackBarUtil.onSuccess(
+                              context, "Usuário criado com sucesso!"),
+                          onFailed: () => _snackBarUtil.onFailed(
+                              context, "Falha ao criar usuário"),
+                        );
+                      }
+                    },
+                    style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all(LinearBorder.bottom())),
+                    child: const Text("Criar Conta"),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: "E-mail",
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.emailAddress,
-              validator: (text) {
-                if (text!.isEmpty || !text!.contains("@")) {
-                  return "E-mail inválido!";
-                }
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: "Senha",
-                border: OutlineInputBorder(),
-              ),
-              obscureText: true,
-              validator: (text) {
-                if (text!.isEmpty || text.length < 6) {
-                  return "Senha inválida!";
-                }
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: "Endereço",
-                border: OutlineInputBorder(),
-              ),
-              obscureText: true,
-              validator: (text) {
-                if (text!.isEmpty || text.length < 6) {
-                  return "Endereço inválido!";
-                }
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 45,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_globalKey.currentState!.validate()) {}
-                },
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all(LinearBorder.bottom())),
-                child: const Text("Criar Conta"),
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
