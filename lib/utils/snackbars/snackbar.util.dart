@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class SnackBarUtil {
   void onSuccess(BuildContext context, String message) {
@@ -16,7 +17,7 @@ class SnackBarUtil {
     });
   }
 
-  void onFailed(BuildContext context, String message) {
+  void onFailed(BuildContext context, String message) async {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -24,5 +25,7 @@ class SnackBarUtil {
         backgroundColor: Colors.redAccent,
       ),
     );
+
+    Vibrate.feedback(FeedbackType.error);
   }
 }
